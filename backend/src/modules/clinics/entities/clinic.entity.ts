@@ -1,14 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-//import { Doctor } from '../doctors/doctor.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { DoctorEntity } from '../../doctors/enteties/doctor.entity';
 
 @Entity('clinics')
-export class Clinic {
+export class ClinicEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
-  // @ManyToMany(() => Doctor, (doctor) => doctor.clinics)
-  // doctors: Doctor[];
+  @ManyToMany(() => DoctorEntity, (doctor) => doctor.clinics)
+  doctors: DoctorEntity[];
 }
