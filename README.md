@@ -1,7 +1,4 @@
 # Nestjs-clinic-api2025
-
-# NestJS Clinic API 2025 
-
 Цей проєкт є REST API для клініки, реалізований з використанням **NestJS**, **TypeORM**, **MySQL** та **Docker**.
 
 ##  Швидкий запуск через Docker
@@ -49,3 +46,6 @@ Postman
 Колекції запитів доступні у:
 backend/src/postman/
 Їх можна імпортувати в Postman для швидкого тестування API.
+
+Автор
+Elena Stratelyuk
