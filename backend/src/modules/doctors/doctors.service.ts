@@ -56,4 +56,30 @@ export class DoctorsService {
       relations: ['clinics', 'services'],
     });
   }
+
+  async update(id: number, dto: CreateDoctorDto) {
+    const doctor = await this.doctorRepo.findOne({ where: { id } });
+    if (!doctor) throw new Error('Doctor not found');
+
+    const clinics = await this.clinicRepo.find({
+      where: { id: In(dto.clinics) },
+    });
+    const services = await this.serviceRepo.find({
+      where: { id: In(dto.services) },
+    });
+
+    const updated = Object.assign(doctor, {
+      ...dto,
+      clinics,
+      services,
+    });
+
+    return this.doctorRepo.save(updated);
+  }
+
+  async delete(id: number) {
+    const doctor = await this.doctorRepo.findOne({ where: { id } });
+    if (!doctor) throw new Error('Doctor not found');
+    return this.doctorRepo.remove(doctor);
+  }
 }

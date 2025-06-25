@@ -23,4 +23,20 @@ export class ClinicsService {
       order: sort ? { name: sort } : {},
     });
   }
+
+  async update(id: number, dto: Partial<CreateClinicDto>) {
+    const clinic = await this.clinicRepo.findOne({ where: { id } });
+    if (!clinic) throw new Error('Clinic not found');
+
+    const updated = Object.assign(clinic, dto);
+    return this.clinicRepo.save(updated);
+  }
+
+  async remove(id: number) {
+    const result = await this.clinicRepo.delete(id);
+    if (result.affected === 0) {
+      throw new Error('Clinic not found');
+    }
+    return { message: 'Clinic deleted successfully' };
+  }
 }

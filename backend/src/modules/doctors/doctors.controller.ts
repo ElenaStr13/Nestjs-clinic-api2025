@@ -1,7 +1,23 @@
-import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Param,
+  Delete,
+  Body,
+  Query,
+  UseGuards,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { DoctorsService } from './doctors.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Roles } from '../../decorators/roles.decorator';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
@@ -12,9 +28,12 @@ import { RolesGuard } from '../../guards/roles.guard';
 export class DoctorsController {
   constructor(private doctorService: DoctorsService) {}
 
+  // Добавила RolesGuard, щоб тільки admin міг додавати лікаря
+  @UseGuards(RolesGuard)
   @Roles('admin')
   @ApiBearerAuth()
   @Post()
+  @ApiOperation({ summary: 'Create doctor' })
   create(@Body() dto: CreateDoctorDto) {
     return this.doctorService.create(dto);
   }
@@ -47,5 +66,23 @@ export class DoctorsController {
       sortBy,
       sortOrder,
     );
+  }
+
+  @ApiBearerAuth()
+  @Put(':id')
+  @ApiOperation({ summary: 'Update doctor for id' })
+  @Roles('admin')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: CreateDoctorDto) {
+    return this.doctorService.update(id, dto);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete doctor for id' })
+  @Delete(':id')
+  @Roles('admin')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.doctorService.delete(id);
   }
 }

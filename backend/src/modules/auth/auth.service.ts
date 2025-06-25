@@ -69,7 +69,6 @@ export class AuthService {
       this.refreshTokenExpiresIn,
       jti,
     );
-
     return {
       accessToken,
       refreshToken,

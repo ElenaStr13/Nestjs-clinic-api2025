@@ -14,8 +14,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { UserRequest } from './interfaces/user.request.interface';
 
-@ApiTags('auth')
-@Controller('auth')
+@ApiTags('Auth')
+@Controller('Auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
