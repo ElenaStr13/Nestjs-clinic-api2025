@@ -17,17 +17,20 @@ import {
   ApiQuery,
   ApiBearerAuth,
   ApiOperation,
+  ApiOkResponse,
 } from '@nestjs/swagger';
 import { Roles } from '../../decorators/roles.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { ClinicWithDoctorsDto } from './dto/clinic-with-doctors.dto';
+import { ClinicPublicDto } from './dto/clinic-public.dto';
 
-@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiTags('Clinics')
 @Controller('clinics')
 export class ClinicsController {
   constructor(private readonly clinicService: ClinicsService) {}
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   @ApiBearerAuth()
   @Post()
@@ -35,12 +38,39 @@ export class ClinicsController {
     return this.clinicService.create(dto);
   }
 
+  @Get('admin')
   @ApiBearerAuth()
-  @Get()
+  @ApiOperation({ summary: 'List of clinics for Admin' })
+  @Roles('admin')
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', enum: ['ASC', 'DESC'], required: false })
-  findAll(@Query('name') name?: string, @Query('sort') sort?: 'ASC' | 'DESC') {
-    return this.clinicService.findAll(name, sort);
+  @ApiOkResponse({ type: [ClinicWithDoctorsDto] })
+  findAllAdmin(
+    @Query('name') name?: string,
+    @Query('sort') sort?: 'ASC' | 'DESC',
+  ) {
+    return this.clinicService.findAllAdmin(name, sort);
+  }
+
+  @ApiBearerAuth()
+  @Get('public')
+  @ApiQuery({ name: 'name', required: false })
+  @ApiQuery({ name: 'sort', required: false })
+  @ApiQuery({ name: 'doctorLastName', required: false })
+  @ApiQuery({ name: 'serviceName', required: false })
+  findAllPublic(
+    @Query('name') name?: string,
+    @Query('sort') sort?: 'ASC' | 'DESC',
+    @Query('doctorLastName') doctorLastName?: string,
+    @Query('serviceName') serviceName?: string,
+  ) {
+    return this.clinicService.findAllPublic(
+      name,
+      sort,
+      doctorLastName,
+      serviceName,
+    );
   }
 
   @ApiBearerAuth()
@@ -48,10 +78,7 @@ export class ClinicsController {
   @ApiOperation({ summary: 'Update clinic for id' })
   @Roles('admin')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() dto: Partial<CreateClinicDto>,
-  ) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: CreateClinicDto) {
     return this.clinicService.update(id, dto);
   }
 

@@ -11,42 +11,14 @@
 			"name": "clinics",
 			"item": [
 				{
-					"name": "create clinic",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Kyiv Trauma Hospital\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/clinics",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"clinics"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "find clinics",
+					"name": "clinics public",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImVtYWlsIjoib2xlbmEuZXhhbXBsZUBnbWFpbC5jb20iLCJqdGkiOiI2bG8iLCJpYXQiOjE3NDkxMzMxODEsImV4cCI6MTc0OTEzMzc4MX0.0R0_IvvyGKz1CgcsHrMYWbyNu8qiRA7vIPU_7lkGEUs",
+									"value": "{{AccessToken}}",
 									"type": "string"
 								}
 							]
@@ -61,20 +33,192 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/clinics?name=dental",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/clinics/public?name=&doctorLastName=&serviceName=",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"clinics"
+								"clinics",
+								"public"
 							],
 							"query": [
 								{
 									"key": "name",
-									"value": "dental"
+									"value": ""
+								},
+								{
+									"key": "doctorLastName",
+									"value": ""
+								},
+								{
+									"key": "serviceName",
+									"value": ""
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clinics for admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/clinics/public?name=&sort",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics",
+								"public"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": ""
+								},
+								{
+									"key": "doctorLastName",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "serviceName",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create clinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Kyiv Trauma Hospital\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clinics",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update clinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Kyiv Trauma Hospital\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clinics/5",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete clinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clinics/7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clinics",
+								"7"
 							]
 						}
 					},
@@ -86,34 +230,6 @@
 			"name": "doctors",
 			"item": [
 				{
-					"name": "create doctor",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"firstName\": \"Valentina\",\r\n  \"lastName\": \"Shevchenko\",\r\n  \"phone\": \"+380931112233\",\r\n  \"email\": \"valya.shev@example.com\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/doctors",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"doctors"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "find doctors",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -124,7 +240,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoib2xlbmEuZXhhbXBsZUBnbWFpbC5jb20iLCJqdGkiOiJhYmo2IiwiaWF0IjoxNzQ5MTI3MTg2LCJleHAiOjE3NDkxMjc3ODZ9.GFgJWIgoYP_EIz-lkI3r10qxEi8pbvg3BQb1QcSVCvU",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -141,7 +257,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/doctors?phone=380932222222",
+							"raw": "http://localhost:3000/doctors?email=",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -153,13 +269,141 @@
 							"query": [
 								{
 									"key": "phone",
-									"value": "380932222222"
+									"value": "",
+									"disabled": true
 								},
 								{
 									"key": "email",
-									"value": "maria.shevchuk@example.com",
+									"value": ""
+								},
+								{
+									"key": "firstName",
+									"value": "",
 									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create doctor",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Vitaliy\",\r\n  \"lastName\": \"Kenay\",\r\n  \"phone\": \"+380987654321\",\r\n  \"email\": \"vitaliy.kenay@example.com\",\r\n  \"clinics\": [1, 3],\r\n  \"services\": [2, 4]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Vitaliy\",\r\n  \"lastName\": \"Vdovchenko\",\r\n  \"phone\": \"+380987654321\",\r\n  \"email\": \"vitaliy.kenay@example.com\",\r\n  \"clinics\": [1, 3],\r\n  \"services\": [2, 4]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/8",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Nazar\",\r\n  \"lastName\": \"Petrenko\",\r\n  \"phone\": \"+380931234567\",\r\n  \"email\": \"nazar.petrenko@example.com\",\r\n  \"clinics\": [1, 3],\r\n  \"services\": [2, 5]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/doctors/8",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"doctors",
+								"8"
 							]
 						}
 					},
@@ -171,34 +415,6 @@
 			"name": "services",
 			"item": [
 				{
-					"name": "create service",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"MRI Scan\",\r\n    \"description\": \"Magnetic resonance imaging for diagnostics\",\r\n    \"price\": 2500\r\n  }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/services",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"services"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "findl service",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -209,7 +425,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImVtYWlsIjoib2xlbmEuZXhhbXBsZUBnbWFpbC5jb20iLCJqdGkiOiJ4MG8iLCJpYXQiOjE3NDkxMzA0NDEsImV4cCI6MTc0OTEzMTA0MX0.Ji4i0ueGLpxguVqsYoC0gWrmTL7YLPoBWUKehixCgqU",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -218,7 +434,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Kyiv Spine Clinic\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -226,7 +442,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/services?name=Therapy",
+							"raw": "http://localhost:3000/services?name=",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -238,7 +454,7 @@
 							"query": [
 								{
 									"key": "name",
-									"value": "Therapy"
+									"value": ""
 								}
 							]
 						}
@@ -268,7 +484,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImVtYWlsIjoib2xlbmEuZXhhbXBsZUBnbWFpbC5jb20iLCJqdGkiOiJpa3IiLCJpYXQiOjE3NDkxMzU1MzEsImV4cCI6MTc0OTEzNjEzMX0.clc0v8D071l63_ax1buoV___G33ckq2YnnDhxOqDQkE",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -285,7 +501,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/services/{{id}}",
+							"raw": "http://localhost:3000/services/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -293,7 +509,45 @@
 							"port": "3000",
 							"path": [
 								"services",
-								"{{id}}"
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create service",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"MRI Scan\",\r\n    \"description\": \"Magnetic resonance imaging for diagnostics\",\r\n    \"price\": 2500\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/services",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"services"
 							]
 						}
 					},
@@ -307,7 +561,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoib2xlbmEuZXhhbXBsZUBnbWFpbC5jb20iLCJqdGkiOiJmM20iLCJpYXQiOjE3NDkxMjczNTcsImV4cCI6MTc0OTEyNzk1N30.tN_nQ2GO21Tf9POai9vFzVs34h0bLrvgzZVXxM6UVqM",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -352,7 +606,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoib2xlbmEuZXhhbXBsZUBnbWFpbC5jb20iLCJqdGkiOiJmM20iLCJpYXQiOjE3NDkxMjczNTcsImV4cCI6MTc0OTEyNzk1N30.tN_nQ2GO21Tf9POai9vFzVs34h0bLrvgzZVXxM6UVqM",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -425,6 +679,18 @@
 				},
 				{
 					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"accessToken\", pm.response.json().accessToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -438,15 +704,101 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/auth/login",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/auth/login",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"accessToken\", pm.response.json().accessToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImVtYWlsIjoib2xlbmEuZXhhbXBsZUBnbWFpbC5jb20iLCJqdGkiOiJtNG4iLCJpYXQiOjE3NTA5NDI0ODIsImV4cCI6MTc1MDk0MzA4Mn0.13LA3r9tkbw-_Cv_msOVwOJaBasDlDigLemrbB8IQ0U\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/refresh",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"accessToken\", pm.response.json().accessToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
 							]
 						}
 					},

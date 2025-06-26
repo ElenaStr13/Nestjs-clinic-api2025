@@ -28,7 +28,6 @@ import { RolesGuard } from '../../guards/roles.guard';
 export class DoctorsController {
   constructor(private doctorService: DoctorsService) {}
 
-  // Добавила RolesGuard, щоб тільки admin міг додавати лікаря
   @UseGuards(RolesGuard)
   @Roles('admin')
   @ApiBearerAuth()

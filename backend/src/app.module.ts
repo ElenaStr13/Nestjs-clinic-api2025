@@ -8,7 +8,6 @@ import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
-    //імпортую ConfigModule глобально, щоб використовувати ACCESS_TOKEN_EXPIRATION_TIME де треба
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',

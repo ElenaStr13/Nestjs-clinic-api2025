@@ -14,6 +14,7 @@ import { ConfigService } from '@nestjs/config';
 import { ITokens } from './interfaces/token.interface';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { IJWTPayload } from './interfaces/jwt-payload.interface';
+import { LessThan } from 'typeorm';
 
 @Injectable()
 export class AuthService {
@@ -69,6 +70,7 @@ export class AuthService {
       this.refreshTokenExpiresIn,
       jti,
     );
+    await this.deleteExpiredTokens();
     return {
       accessToken,
       refreshToken,
@@ -83,7 +85,6 @@ export class AuthService {
 
       const tokenEntity = await this.tokenRepository.findOne({
         where: { refreshToken, isBlocked: false },
-        //витягаємо разом з токеном дані про  user
         relations: ['user'],
       });
 
@@ -115,7 +116,7 @@ export class AuthService {
         this.refreshTokenExpiresIn,
         jti,
       );
-
+      await this.deleteExpiredTokens();
       return {
         accessToken: newAccessToken,
         refreshToken: newRefreshToken,
@@ -171,4 +172,12 @@ export class AuthService {
     }
     return user;
   }
+
+  private async deleteExpiredTokens() {
+    const now = new Date();
+    await this.tokenRepository.delete({
+      refreshTokenExpiresAt: LessThan(now),
+    });
+  }
+
 }
