@@ -23,7 +23,7 @@ import { Roles } from '../../decorators/roles.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { ClinicWithDoctorsDto } from './dto/clinic-with-doctors.dto';
-import { ClinicPublicDto } from './dto/clinic-public.dto';
+
 
 @ApiTags('Clinics')
 @Controller('clinics')
