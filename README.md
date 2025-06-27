@@ -31,6 +31,10 @@ DB_NAME=my-nestjs-test
 JWT_SECRET=your_jwt_secret
 PORT=3000
 
+JWT_EXPIRATION_TIME=420
+ACCESS_TOKEN_EXPIRATION_TIME=420
+REFRESH_TOKEN_EXPIRATION_TIME=600
+
 3. Запустити Docker в терміналі:
 docker compose up --build
 

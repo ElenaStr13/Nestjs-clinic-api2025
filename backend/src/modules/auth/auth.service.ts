@@ -5,16 +5,15 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { LessThan, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { UserEntity } from './entities/user.entity';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
 import { Token } from './entities/token.entity';
 import { ConfigService } from '@nestjs/config';
 import { ITokens } from './interfaces/token.interface';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { IJWTPayload } from './interfaces/jwt-payload.interface';
-import { LessThan } from 'typeorm';
+import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class AuthService {
